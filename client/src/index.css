@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.active{
+    color: cyan;
+}
+
+
+*{
+    /* border:0.01px solid red; */
+}
