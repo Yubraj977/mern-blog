@@ -2,6 +2,7 @@ require('dotenv').config()
 const express=require('express');
 const cors=require('cors')
 
+
 const user=require('./models/user.model.js')
 const { default: mongoose } = require('mongoose');
 const userRouter=require('./routes/user.route.js');

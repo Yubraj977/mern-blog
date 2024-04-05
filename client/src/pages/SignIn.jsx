@@ -16,9 +16,7 @@ function SignIn() {
   const loading = useSelector((state) => state.user.loading)
   const ferror = useSelector((state) => state.user.error)
   const state = useSelector((state) => state)
-  console.log(state);
-  console.log(loading);
-  console.log(ferror);
+ 
   const [form, setform] = useState({})
 
 

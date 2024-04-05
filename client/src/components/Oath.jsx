@@ -16,7 +16,7 @@ function Oath() {
         Provider.setCustomParameters({prompt:'select_account'})
         try {
             const resultFromGoogle=await signInWithPopup(auth,Provider)
-            const name=await resultFromGoogle.user.email
+            const name=await resultFromGoogle.user.displayName
             const email=await resultFromGoogle.user.email
             const photo=await resultFromGoogle.user.photoURL
                
