@@ -5,11 +5,12 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { useSelector } from 'react-redux';
 import { Dropdown } from 'flowbite-react';
 import { useNavigate } from 'react-router-dom';
+import {Navigate} from 'react-router-dom'
 
 function Header() {
     const navigate=useNavigate()
     const currentUser=useSelector((state)=>state.user.currentUser)
- 
+    // console.log(currentUser);
     return (
         <Navbar fluid rounded >
             <Navbar.Brand as={Link} href="/">
@@ -35,18 +36,19 @@ function Header() {
             <div className="flex md:order-2 gap-2">
                 <DarkThemeToggle />
                 {currentUser?
-                <Dropdown inline arrowIcon={false} label={<div className=' h-10 w-10  rounded-full'><img src={currentUser.photo} alt="" /></div>}>
+                <Dropdown inline arrowIcon={false} label={<div className=' h-10 w-10  rounded-full'><img src={currentUser.photo} alt="" className='rounded-full h-full w-full object-cover' /></div>}>
                         <Dropdown.Header className='flex flex-col gap-3'>
                         <span>{currentUser.username}</span>
                             <span>{currentUser.email}</span>            
         
                         </Dropdown.Header>
                         <Dropdown.Header className='flex flex-col gap-3'>
-                          <Link to='/dashboard'>Profile</Link>
-                            <button>SignOut</button>
+                          <Link to='/dashboard?tab=profile'>
+                                Profile
+                          </Link>
+                            SignOut
                         </Dropdown.Header>
                 </Dropdown>
-
                 :<NavLink to='signin'>
                     <Button color="gray">SignIn</Button>
                 </NavLink>}

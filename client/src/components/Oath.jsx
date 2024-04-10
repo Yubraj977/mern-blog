@@ -29,7 +29,7 @@ function Oath() {
             })
             if (res.ok) {
                 const data = await res.json(); // Parse response body as JSON
-                console.log(data); // Log the data received from the server
+                // console.log(data); // Log the data received from the server
                 dispatch(signInSucess(data))
                 navigate('/')
             } else {

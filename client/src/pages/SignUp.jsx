@@ -51,7 +51,7 @@ function SignUp() {
 
       })
         .catch((res) => { 
-          console.log(res);
+          // console.log(res);
           setloading(false)
          })
 

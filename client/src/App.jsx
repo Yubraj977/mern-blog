@@ -8,7 +8,7 @@ import Dashboard from './pages/Dashboard'
 import Projects from './pages/Projects'
 import Header from './components/Header'
 import Foot from './components/Foot'
-
+import DashboardCover from './components/DashboardCover'
 import { Flowbite } from 'flowbite-react'
 function App() {
 
@@ -23,7 +23,9 @@ function App() {
     <Route path='/signin' element={<SignIn/>}/>
     <Route path='/signup' element={<SignUp/>}/>
     <Route path='/projects' element={<Projects/>}/>
+    <Route element={<DashboardCover/>}>
     <Route path='/dashboard' element={<Dashboard/>}/>
+    </Route>
    </Routes>
    <Foot/>
    </BrowserRouter>
