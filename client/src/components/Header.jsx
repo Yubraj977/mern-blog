@@ -6,11 +6,31 @@ import { useSelector } from 'react-redux';
 import { Dropdown } from 'flowbite-react';
 import { useNavigate } from 'react-router-dom';
 import {Navigate} from 'react-router-dom'
+import {signOutUserSucess} from '../app/slice/userSlice.js'
+import { useDispatch } from 'react-redux';
+
 
 function Header() {
+    const dispatch =useDispatch()
     const navigate=useNavigate()
     const currentUser=useSelector((state)=>state.user.currentUser)
     // console.log(currentUser);
+    async function handlesignOut(e){
+        console.log(`i am clicked`)
+        try {
+          const res=await fetch('/api/user/signout',{
+            method:"POST"
+          })
+          const data=await res.json()
+          console.log(res)
+          console.log(data)
+          if(res.ok){
+            dispatch(signOutUserSucess())
+          }
+        } catch (error) {
+          console.log(error)
+        }
+      }
     return (
         <Navbar fluid rounded >
             <Navbar.Brand as={Link} href="/">
@@ -46,7 +66,7 @@ function Header() {
                           <Link to='/dashboard?tab=profile'>
                                 Profile
                           </Link>
-                            SignOut
+                            <span onClick={handlesignOut}>SignOut</span>
                         </Dropdown.Header>
                 </Dropdown>
                 :<NavLink to='signin'>

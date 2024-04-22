@@ -55,8 +55,8 @@ if ( !email || !password ||  email == " " || password == '') {
 
 
     if(validUser&&validPassword){
-const token=jwt.sign({id:validUser._id,username:validUser.username},process.env.SECRET_KEY)
-const userData={username:validUser.username, email:validUser.email,photo:validUser.photo}
+const token=jwt.sign({id:validUser._id,username:validUser.username,isAdmin:validUser.isAdmin},process.env.SECRET_KEY)
+const userData={username:validUser.username, email:validUser.email,photo:validUser.photo,_id:validUser._id,isAdmin:validUser.isAdmin}
 
 res.status(200).cookie("access_token",token,).json({sucess:true,...userData})
     }
@@ -76,32 +76,31 @@ res.status(200).cookie("access_token",token,).json({sucess:true,...userData})
 const googleSignIn=async(req,res,next)=>{
 const {name,email,photo}=req.body
 console.log(req.body)
-res.json({message:"Everything is okay!"})
 
-// try {
-//   const existUser=await user.findOne({email});
-//   console.log(existUser)
-//   if(existUser){
-//     const token=jwt.sign({id:existUser._id},process.env.SECRET_KEY)
-//     const userData={username:existUser.username,email:existUser.email,photo:existUser.photo}
-//     res.status(200).cookie("access_token",token,{httpOnly:true}).json({sucess:true,...userData})
-//   }
-//   else{
-//     const generatedPassword=Math.random().toString(36).slice(-8)
-//     const hashedPassword=await bcrypt.hash(generatedPassword,10)
-//     const newUser=new user( {
-//       username: name.toLowerCase().split(' ').join('') + Math.random().toString(36).substr(2, 4),
-//       email:email,
-//       password:hashedPassword,
-//       photo:photo
-//     })
-//     await newUser.save();
-//     const token=jwt.sign({id:newUser._id},process.env.SECRET_KEY)
-//     const {password,...rest}=newUser.toObject();
-//     res.status(200).cookie('access_token',token,{httpOnly:true}).json(rest);
-//   } 
-// } catch (error) {
-//   next(error)
-// }
+try {
+  const existUser=await user.findOne({email});
+  console.log(existUser)
+  if(existUser){
+    const token=jwt.sign({id:existUser._id,isAdmin:existUser.isAdmin},process.env.SECRET_KEY)
+    const userData={username:existUser.username,email:existUser.email,photo:existUser.photo}
+    res.status(200).cookie("access_token",token,{httpOnly:true}).json({sucess:true,...userData})
+  }
+  else{
+    const generatedPassword=Math.random().toString(36).slice(-8)
+    const hashedPassword=await bcrypt.hash(generatedPassword,10)
+    const newUser=new user( {
+      username: name.toLowerCase().split(' ').join('') + Math.random().toString(36).substr(2, 4),
+      email:email,
+      password:hashedPassword,
+      photo:photo
+    })
+    await newUser.save();
+    const token=jwt.sign({id:newUser._id,isAdmin:newUser.isAdmin},process.env.SECRET_KEY)
+    const {password,...rest}=newUser.toObject();
+    res.status(200).cookie('access_token',token,{httpOnly:true}).json(rest);
+  } 
+} catch (error) {
+  next(error)
+}
 }
 module.exports = { signup,signin,googleSignIn };
